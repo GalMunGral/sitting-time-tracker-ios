@@ -8,42 +8,71 @@
 
 import UIKit
 import CoreMotion
+import CoreLocation
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
   var window: UIWindow?
   var motionManager: CMMotionManager?
-
+  var locationManager: CLLocationManager?
+  let queue = OperationQueue()
+  var prevAcceleration = 0.0
+  var timer: Timer?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    // Override point for customization after application launch.
+    
+    // Use background location updates to keep app awake in the background
+    // (At least when user is moving)
+    self.locationManager = CLLocationManager()
+    locationManager!.delegate = self
+    if (CLLocationManager.authorizationStatus() != .authorizedAlways) {
+      locationManager!.requestAlwaysAuthorization()
+    }
+    locationManager!.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+    locationManager!.allowsBackgroundLocationUpdates = true
+    locationManager!.startUpdatingLocation()
+
+    // Start monitoring device motion
     self.motionManager = CMMotionManager()
+    motionManager!.deviceMotionUpdateInterval = 1.0 / 60.0
+    motionManager!.startDeviceMotionUpdates(using: .xArbitraryZVertical)
+    
+    self.timer = Timer.scheduledTimer(withTimeInterval: 1.0 / 60.0, repeats: true, block: { (timer) in
+      // Process motion data here
+      if let data = self.motionManager!.deviceMotion {
+        // Take inner product of gravity and user acceleration
+        let acceleration = (
+          data.gravity.x * data.userAcceleration.x
+            + data.gravity.y * data.userAcceleration.y
+            + data.gravity.z * data.userAcceleration.z
+          ) / 9.81
+        
+        if (acceleration.magnitude < 0.01) { return } // THRESHOLD
+        
+        if (self.prevAcceleration <= 0 && acceleration > 0) {
+          self.updateUIWith(text: "아래")
+        } else if (self.prevAcceleration >= 0 && acceleration < 0) {
+          self.updateUIWith(text: "위")
+        }
+        self.prevAcceleration = acceleration
+      }
+    })
     return true
   }
-
-  func applicationWillResignActive(_ application: UIApplication) {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+  
+  func updateUIWith(text: String) {
+    // TODO: Update UI
+    print(text)
   }
-
-  func applicationDidEnterBackground(_ application: UIApplication) {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+  
+  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    print("Authorization status changed")
   }
-
-  func applicationWillEnterForeground(_ application: UIApplication) {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+  
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    // Nothing to implement. This is just to keep the app awake in the background.
   }
-
-  func applicationDidBecomeActive(_ application: UIApplication) {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-  }
-
-  func applicationWillTerminate(_ application: UIApplication) {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-  }
-
 
 }
 

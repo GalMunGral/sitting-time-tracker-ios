@@ -10,22 +10,13 @@ import UIKit
 import CoreMotion
 
 class ViewController: UIViewController {
-  
-  var motionManager: CMMotionManager?
-  let queue = OperationQueue()
-  var prevAcceleration = 0.0
-  
+    
   @IBOutlet weak var displayText: UITextField!
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    (UIApplication.shared.delegate as! AppDelegate).mainVC = self
   }
-  
-//  private func updateUIWith(text: String) {
-//    DispatchQueue.main.async {
-//      self.displayText.text = text
-//    }
-//  }
 
 }
 

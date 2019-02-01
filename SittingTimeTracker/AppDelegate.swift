@@ -14,11 +14,13 @@ import CoreLocation
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
 
   var window: UIWindow?
+  var mainVC: ViewController?
+  
   var motionManager: CMMotionManager?
   var locationManager: CLLocationManager?
+  var timer: Timer?
   let queue = OperationQueue()
   var prevAcceleration = 0.0
-  var timer: Timer?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
@@ -62,8 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
   }
   
   func updateUIWith(text: String) {
-    // TODO: Update UI
     print(text)
+    self.mainVC?.displayText.text = text
   }
   
   func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {

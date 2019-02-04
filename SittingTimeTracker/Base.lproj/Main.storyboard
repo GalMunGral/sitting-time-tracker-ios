@@ -18,15 +18,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sM8-q5-BTy">
-                                <rect key="frame" x="139" y="318" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sM8-q5-BTy">
+                                <rect key="frame" x="183" y="319" width="9" height="29"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" weight="black" pointSize="24"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UN0-LS-ucb">
+                                <rect key="frame" x="144" y="398" width="87" height="30"/>
+                                <state key="normal" title="View History"/>
+                                <connections>
+                                    <action selector="viewHistory:" destination="BYZ-38-t0r" eventType="touchUpInside" id="meL-U0-fw9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="sM8-q5-BTy" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="DUZ-YC-UfT"/>
+                            <constraint firstItem="UN0-LS-ucb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ljv-Ls-iXz"/>
+                            <constraint firstItem="UN0-LS-ucb" firstAttribute="top" secondItem="sM8-q5-BTy" secondAttribute="bottom" constant="50" id="sts-YM-04L"/>
+                            <constraint firstItem="sM8-q5-BTy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yc0-Ia-aa4"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>

@@ -64,7 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
   }
   
   func updateUIWith(text: String) {
-    print(text)
     self.mainVC?.displayText.text = text
   }
   

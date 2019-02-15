@@ -28,7 +28,7 @@ class HistoryViewController: UIViewController, WKUIDelegate, WKNavigationDelegat
     webView.uiDelegate = self
     webView.navigationDelegate = self
     webView.scrollView.delegate = self
-    webView.load(URLRequest(url: URL(string: "http://128.61.29.253:8080")!, cachePolicy: URLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 60.0))
+    webView.load(URLRequest(url: URL(string: "http://sitting-time-tracker.herokuapp.com")!, cachePolicy: URLRequest.CachePolicy.reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 60.0))
   }
 
   func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
